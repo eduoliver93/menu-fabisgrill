@@ -4,7 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Fabi's Grill | Mobile Menu - Temple Bar, Dublin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --char: #120c08;
+            --panel: #231810;
+            --panel-2: #2c1f15;
+            --line: #41301f;
+            --ember: #e2762a;
+            --ember-deep: #a8431c;
+            --gold: #d9a860;
+            --gold-bright: #eeb75e;
+            --cream: #f2e8d9;
+            --muted: #b7a289;
+            --font-display: 'Fraunces', 'Georgia', serif;
+            --font-body: 'Work Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,11 +31,21 @@
         }
 
         body {
-            background: #1a120b;
-            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, 'Inter', sans-serif;
-            color: #f5ede0;
+            background: var(--char);
+            background-image:
+                radial-gradient(ellipse 900px 500px at 50% -10%, rgba(226,118,42,0.10), transparent 60%);
+            font-family: var(--font-body);
+            color: var(--cream);
             scroll-behavior: smooth;
             touch-action: pan-x pan-y;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+            }
         }
 
         .container {
@@ -28,83 +56,113 @@
 
         .hero {
             text-align: center;
-            margin-top: 0;           
-            margin-bottom: 0.5rem;   
-            padding-top: 0;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            padding: 1.6rem 0 0.5rem;
+            animation: heroIn 0.7s ease both;
+        }
+
+        @keyframes heroIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-logo-wrap {
+            position: relative;
+            width: 220px;
+            max-width: 72%;
+            margin: 0 auto 0.9rem;
+        }
+
+        .hero-logo-wrap::before {
+            content: "";
+            position: absolute;
+            inset: -22%;
+            background: radial-gradient(circle, rgba(226,118,42,0.55) 0%, rgba(226,118,42,0.18) 42%, transparent 72%);
+            filter: blur(10px);
+            border-radius: 50%;
+            animation: embers 4.5s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes embers {
+            0%, 100% { opacity: 0.55; transform: scale(0.96); }
+            50% { opacity: 0.95; transform: scale(1.06); }
         }
 
         .hero-logo {
-            width: 220px;
-            max-width: 85%;
+            position: relative;
+            z-index: 1;
+            width: 100%;
             height: auto;
-            margin-bottom: 0.5rem;
             border-radius: 16px;
             display: block;
-            margin-left: auto;
-            margin-right: auto;
             touch-action: manipulation;
+            animation: logoBreathe 4.5s ease-in-out infinite;
         }
 
-        .location-tag {
-            display: flex;
-            justify-content: center;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-            margin: 0.5rem 0 0.3rem;
+        @keyframes logoBreathe {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(226,118,42,0.25)); }
+            50% { filter: drop-shadow(0 0 22px rgba(226,118,42,0.55)); }
         }
 
-        .location-tag span {
-            font-family: 'Georgia', 'Times New Roman', 'Playfair Display', serif;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            font-weight: 400;
-            color: #e6bc7e;
-            text-transform: uppercase;
-            background: rgba(0,0,0,0.3);
-            padding: 0.2rem 0.8rem;
-            border-radius: 30px;
-            backdrop-filter: blur(2px);
-        }
-
-        .sub {
-            font-family: 'Georgia', 'Times New Roman', 'Playfair Display', serif;
-            font-size: 1.2rem;
-            font-style: italic;
-            margin: 0.3rem 0;
-            color: #f3b33d;
-            letter-spacing: 1px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-        }
-
-        .badge-location {
-            margin-top: 0.3rem;
-            font-size: 0.75rem;
-            color: #f3b33d;
+        .eyebrow {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            color: var(--gold);
+            margin-bottom: 0.15rem;
+        }
+
+        .sub {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            margin: 0.2rem 0 0.7rem;
+            color: var(--cream);
+            letter-spacing: 0.2px;
+        }
+
+        .badge-location {
+            margin-top: 0.2rem;
+            font-size: 0.78rem;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
             flex-wrap: wrap;
+            font-family: var(--font-body);
         }
 
         .badge-location span {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: #2c1e12;
-            padding: 0.25rem 0.8rem;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .badge-location .meta-divider {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: var(--line);
+            display: inline-block;
         }
 
         .tabs-container {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: #1a120b;
-            padding: 0.5rem 0 0.6rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid #443829;
+            background: var(--char);
+            padding: 0.6rem 0 0.7rem;
+            margin-bottom: 1.6rem;
+            border-bottom: 1px solid var(--line);
         }
 
         .tabs-wrapper {
@@ -113,7 +171,7 @@
             overflow-x: auto;
             overflow-y: hidden;
             gap: 0.5rem;
-            padding: 0.3rem 0.8rem 0.6rem;
+            padding: 0.3rem 0.8rem 0.5rem;
             scrollbar-width: thin;
             -webkit-overflow-scrolling: touch;
         }
@@ -123,26 +181,26 @@
         }
 
         .tabs-wrapper::-webkit-scrollbar-track {
-            background: #2c1e12;
+            background: var(--panel-2);
             border-radius: 10px;
         }
 
         .tabs-wrapper::-webkit-scrollbar-thumb {
-            background: #e07c1f;
+            background: var(--ember);
             border-radius: 10px;
         }
 
         .tab-btn {
-            background: #2c1e12;
-            border: none;
-            color: #e6bc7e;
-            font-size: 0.75rem;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--gold);
+            font-size: 0.74rem;
             font-weight: 600;
             padding: 0.5rem 1rem;
             border-radius: 40px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: inherit;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            font-family: var(--font-body);
             white-space: nowrap;
             flex-shrink: 0;
             touch-action: manipulation;
@@ -150,14 +208,13 @@
 
         .tab-btn:active {
             transform: scale(0.96);
-            background: #e07c1f;
-            color: #1a120b;
         }
 
         .tab-btn.active {
-            background: #e07c1f;
-            color: #1a120b;
-            box-shadow: 0 2px 8px rgba(224,124,31,0.4);
+            background: linear-gradient(135deg, var(--ember), var(--ember-deep));
+            border-color: transparent;
+            color: var(--char);
+            box-shadow: 0 3px 10px rgba(226,118,42,0.35);
         }
 
         .menu-section {
@@ -175,11 +232,13 @@
         }
 
         .section-title {
-            font-size: 1.6rem;
-            border-left: 5px solid #e07c1f;
-            padding-left: 0.8rem;
-            margin-bottom: 1.2rem;
+            font-family: var(--font-display);
+            font-size: 1.7rem;
             font-weight: 600;
+            border-left: 3px solid var(--ember);
+            padding-left: 0.9rem;
+            margin-bottom: 1.3rem;
+            color: var(--cream);
         }
 
         .cards-grid {
@@ -189,12 +248,12 @@
         }
 
         .dish-card {
-            background: #2a211b;
+            background: var(--panel);
             border-radius: 20px;
             overflow: hidden;
-            transition: 0.15s ease;
-            border: 1px solid #443829;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: transform 0.15s ease, border-color 0.15s ease;
+            border: 1px solid var(--line);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.35);
             display: flex;
             flex-direction: column;
         }
@@ -213,7 +272,7 @@
             height: auto;
             aspect-ratio: 16 / 9;
             object-fit: contain;
-            background: #2a211b;
+            background: var(--panel);
             display: block;
             touch-action: manipulation;
         }
@@ -288,7 +347,7 @@
 
         .lightbox-caption {
             margin-top: 1rem;
-            color: #f3b33d;
+            color: var(--gold-bright);
             font-size: 0.9rem;
             text-align: center;
             padding: 0.5rem;
@@ -333,12 +392,13 @@
         }
 
         .dish-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #f3cf93;
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--cream);
             display: inline-flex;
             align-items: center;
-            gap: 0.3rem;
+            gap: 0.35rem;
             flex-wrap: wrap;
         }
 
@@ -346,70 +406,73 @@
         .hot-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.25rem;
-            background: linear-gradient(135deg, #e07c1f, #c0392b);
-            color: white;
-            font-size: 0.6rem;
-            font-weight: bold;
-            padding: 0.2rem 0.5rem;
+            gap: 0.3rem;
+            background: transparent;
+            border: 1px solid var(--ember);
+            color: var(--gold-bright);
+            font-family: var(--font-body);
+            font-size: 0.58rem;
+            font-weight: 600;
+            padding: 0.18rem 0.5rem;
             border-radius: 30px;
-            margin-left: 0.3rem;
+            margin-left: 0.2rem;
             vertical-align: middle;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.6px;
         }
 
         .fire-icon {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             display: inline-block;
-            animation: flicker 1.5s infinite;
+            animation: flicker 2.2s ease-in-out infinite;
         }
 
         @keyframes flicker {
-            0% { opacity: 1; text-shadow: 0 0 2px #ff6600; }
-            50% { opacity: 0.8; text-shadow: 0 0 6px #ff3300; }
-            100% { opacity: 1; text-shadow: 0 0 2px #ff6600; }
+            0%, 100% { opacity: 1; text-shadow: 0 0 2px #ff7a1a; }
+            50% { opacity: 0.82; text-shadow: 0 0 7px #ff4d12; }
         }
 
         .dish-price {
-            font-size: 1rem;
-            font-weight: 800;
-            color: #f3b33d;
-            background: #1e150f;
-            padding: 0.15rem 0.6rem;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--gold-bright);
+            background: var(--char);
+            border: 1px solid var(--line);
+            padding: 0.18rem 0.65rem;
             border-radius: 30px;
-            transition: all 0.2s ease;
         }
 
         .dish-desc {
-            font-size: 0.8rem;
-            color: #cfc3b4;
-            line-height: 1.35;
-            margin: 0.25rem 0 0.5rem;
+            font-size: 0.82rem;
+            color: var(--muted);
+            line-height: 1.45;
+            margin: 0.3rem 0 0.5rem;
         }
 
         .allergen {
             font-size: 0.65rem;
-            color: #e6bc7e;
-            background: #3b2a1c;
+            color: var(--gold);
+            background: var(--panel-2);
+            border: 1px solid var(--line);
             display: inline-block;
             padding: 0.15rem 0.6rem;
             border-radius: 20px;
-            margin-top: 0.2rem;
+            margin-top: 0.25rem;
         }
 
         .choose-sides-btn {
-            background: #e07c1f;
+            background: linear-gradient(135deg, var(--ember), var(--ember-deep));
             border: none;
-            color: #1a120b;
-            font-size: 0.7rem;
-            font-weight: bold;
-            padding: 0.4rem 1rem;
+            color: var(--char);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.5rem 1rem;
             border-radius: 30px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: inherit;
-            margin-top: 0.5rem;
+            transition: transform 0.15s ease, filter 0.15s ease;
+            font-family: var(--font-body);
+            margin-top: 0.6rem;
             width: 100%;
             text-align: center;
             display: inline-block;
@@ -417,33 +480,33 @@
         }
 
         .choose-sides-btn:active {
-            transform: scale(0.96);
-            background: #f3b33d;
+            transform: scale(0.97);
+            filter: brightness(1.1);
         }
 
         .about-btn {
-            background: linear-gradient(135deg, #2c1e12, #1a120b);
-            border: 2px solid #e07c1f;
-            color: #e6bc7e;
-            font-size: 1rem;
+            background: var(--panel-2);
+            border: 1px solid var(--ember);
+            color: var(--gold);
+            font-size: 0.95rem;
             font-weight: 700;
             padding: 0.8rem 1.5rem;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
+            transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+            font-family: var(--font-body);
             display: block;
             width: 80%;
             max-width: 250px;
-            margin: 1.5rem auto 0;
+            margin: 1.8rem auto 0;
             text-align: center;
             touch-action: manipulation;
         }
 
         .about-btn:active {
             transform: scale(0.97);
-            background: linear-gradient(135deg, #e07c1f, #c0392b);
-            color: white;
+            background: linear-gradient(135deg, var(--ember), var(--ember-deep));
+            color: var(--char);
         }
 
         .about-modal {
@@ -466,10 +529,10 @@
         .about-content {
             max-width: 600px;
             margin: 2rem auto;
-            background: #2a211b;
-            border-radius: 30px;
+            background: var(--panel);
+            border-radius: 28px;
             padding: 2rem;
-            border: 1px solid #e07c1f;
+            border: 1px solid var(--line);
             position: relative;
         }
 
@@ -496,33 +559,38 @@
         }
 
         .about-title {
-            font-size: 2rem;
-            color: #f3b33d;
+            font-size: 2.1rem;
+            font-weight: 600;
+            color: var(--cream);
             text-align: center;
-            margin-bottom: 1rem;
-            font-family: 'Georgia', serif;
+            margin-bottom: 0.6rem;
+            font-family: var(--font-display);
         }
 
         .about-subtitle {
-            font-size: 1.2rem;
-            color: #e6bc7e;
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            color: var(--gold);
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.6rem;
             font-style: italic;
+            font-weight: 500;
         }
 
         .about-text {
             font-size: 0.9rem;
-            line-height: 1.6;
-            color: #cfc3b4;
+            line-height: 1.65;
+            color: var(--muted);
             margin-bottom: 1rem;
         }
 
         .about-section-title {
-            font-size: 1.3rem;
-            color: #f3b33d;
-            margin: 1.5rem 0 0.8rem;
-            border-left: 3px solid #e07c1f;
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--cream);
+            margin: 1.6rem 0 0.8rem;
+            border-left: 3px solid var(--ember);
             padding-left: 0.8rem;
         }
 
@@ -533,7 +601,7 @@
 
         .values-list li {
             padding: 0.3rem 0;
-            color: #cfc3b4;
+            color: var(--muted);
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -541,26 +609,26 @@
 
         .values-list li::before {
             content: "🔥";
-            color: #e07c1f;
+            color: var(--ember);
         }
 
         .footer-note {
-            margin-top: 2rem;
+            margin-top: 2.2rem;
             text-align: center;
             padding-top: 1.5rem;
-            border-top: 1px solid #403528;
-            font-size: 0.7rem;
-            color: #b7a78a;
-            line-height: 1.4;
+            border-top: 1px solid var(--line);
+            font-size: 0.72rem;
+            color: var(--muted);
+            line-height: 1.5;
         }
 
         .developer-credit {
             text-align: center;
-            margin-top: 1rem;
+            margin-top: 1.2rem;
             padding: 0.8rem;
             font-size: 0.65rem;
-            color: #8a7a6a;
-            letter-spacing: 0.5px;
+            color: #83715c;
+            letter-spacing: 0.3px;
         }
 
         .developer-logo {
@@ -577,7 +645,7 @@
         }
 
         .developer-text strong {
-            color: #e6bc7e;
+            color: var(--gold);
             font-weight: 600;
         }
 
@@ -611,15 +679,16 @@
 <body>
 <div class="container">
     <div class="hero">
-        <img class="hero-logo" src="logo-fabis.png" alt="Fabi's Grill">
-        
-        <div class="location-tag">
-            <span> 🇧🇷 BRAZILIAN EXPERIENCE</span>
+        <div class="hero-logo-wrap">
+            <img class="hero-logo" src="logo-fabis.png" alt="Fabi's Grill">
         </div>
-        <div class="sub">✦ Fire · Flavor · Soul ✦</div>
-        
+
+        <div class="eyebrow">🇧🇷 Brazilian Churrasco &amp; Grill</div>
+        <div class="sub">Fire. Flavor. Soul.</div>
+
         <div class="badge-location">
-            <span>🕒 Open daily 11:30pm–21:00pm</span>
+            <span>🕒 Open daily, 11:30am–9pm</span>
+            <span class="meta-divider"></span>
             <span>🥩 Premium cuts</span>
         </div>
     </div>
@@ -706,7 +775,7 @@
         <h2 class="about-section-title">🏠 A Taste of Home</h2>
         <p class="about-text">Whether you're looking for a traditional Brazilian meal, a quick snack, or a place to gather with friends and family, Fabi's Grill is proud to bring a little piece of Brazil to Dublin.</p>
         
-        <p class="about-text" style="text-align: center; margin-top: 1.5rem; font-size: 1rem; color: #f3b33d;">Welcome to Fabi's Grill — where every meal is served with Brazilian passion and hospitality. 🇧🇷✨</p>
+        <p class="about-text" style="text-align: center; margin-top: 1.5rem; font-size: 1rem; color: var(--gold-bright);">Welcome to Fabi's Grill — where every meal is served with Brazilian passion and hospitality. 🇧🇷✨</p>
     </div>
 </div>
 
