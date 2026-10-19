@@ -277,7 +277,6 @@
             touch-action: manipulation;
         }
 
-        /* ESTILO NOVO DO VÍDEO */
         .dish-video {
             width: 100%;
             height: auto;
@@ -422,7 +421,6 @@
             flex-wrap: wrap;
         }
 
-        /* ESTILO DO BEST SELLER */
         .hot-badge {
             display: inline-flex;
             align-items: center;
@@ -529,7 +527,6 @@
             color: var(--char);
         }
 
-        /* ===== BOTÃO DELIVEROO ===== */
         .deliveroo-btn {
             background: var(--panel-2);
             border: 1px solid var(--ember);
@@ -778,7 +775,6 @@
 
     <button class="about-btn" onclick="openAboutModal()">📖 ABOUT US</button>
 
-    <!-- ===== BOTÃO DELIVEROO ===== -->
     <a href="https://deliveroo.ie/menu/Dublin/city-hall/fabis-grill-temple-bar?day=today&geohash=gc7x2yq7c5xq&time=ASAP"
        target="_blank"
        rel="noopener noreferrer"
@@ -897,7 +893,6 @@
     const kidsImg = "images/kids-placeholder.jpg";
     const toppingImg = "images/topping-placeholder.jpg";
 
-    // Lista de pratos que recebem o 🔥 e BEST SELLER
     const hotItems = [
         "PICANHA SIMPLES",
         "PICANHA DA CASA", 
@@ -924,6 +919,7 @@
         }
     }
 
+    // ======================== LIGHTBOX DE IMAGEM ========================
     function openLightbox(imgSrc, itemName) {
         const lightbox = document.getElementById('lightbox');
         const lightboxContent = document.querySelector('.lightbox-content');
@@ -935,14 +931,15 @@
         document.body.style.overflow = 'hidden';
     }
 
-    // NOVA FUNÇÃO PARA VÍDEO NO LIGHTBOX
+    // ======================== LIGHTBOX DE VÍDEO ========================
     function openVideoLightbox(videoSrc, itemName) {
         const lightbox = document.getElementById('lightbox');
         const lightboxContent = document.querySelector('.lightbox-content');
         const lightboxCaption = document.getElementById('lightbox-caption');
         
+        // O atributo 'muted' garante que o vídeo não tenha som
         lightboxContent.innerHTML = `
-            <video class="lightbox-video" controls autoplay playsinline>
+            <video class="lightbox-video" controls autoplay playsinline muted>
                 <source src="${videoSrc}" type="video/mp4">
                 Seu navegador não suporta vídeo.
             </video>
@@ -952,10 +949,15 @@
         document.body.style.overflow = 'hidden';
     }
 
+    // ======================== FECHAR LIGHTBOX (VÍDEO OU IMAGEM) ========================
     function closeLightbox() {
         const lightbox = document.getElementById('lightbox');
         const lightboxContent = document.querySelector('.lightbox-content');
+        
         lightbox.classList.remove('active');
+        
+        // Isso limpa o player de vídeo, o que força o navegador a pará-lo.
+        // Quando o cliente clicar de novo, a foto inicial estará lá.
         lightboxContent.innerHTML = '<img id="lightbox-img" class="lightbox-img" src="" alt="">';
         document.body.style.overflow = '';
     }
@@ -967,7 +969,6 @@
         }
     });
 
-    // FUNÇÃO ATUALIZADA COM SUPORTE A VÍDEO
     function createCard(name, price, desc, allergen, imgSrc, showSideButton = false, videoSrc = null) {
         const isHot = hotItems.includes(name.toUpperCase());
         return { name, price, desc, allergen, img: imgSrc, video: videoSrc, showSideButton, isHot };
@@ -1099,23 +1100,21 @@
         createCard("Palmito (Palm heart)", "€3", "", "", toppingImg, false)
     ];
 
-    // ======================== DESSERTS (MODIFICADO AQUI!) ========================
+    // ======================== DESSERTS (COM VÍDEO E PAVÊ) ========================
     const desserts = [
         createCard("BRIGADEIRO/BEIJINHO", "€3.25", "Brazilian chocolate truffle or coconut truffle.", "", dessertImg, false),
         createCard("PUDIM", "€4.95", "Creamy Brazilian-style flan with caramel sauce.", "D; E", dessertImg, false),
         
-        // MOUSSE COM VÍDEO
         createCard(
             "MOUSSE DE MARACUJÁ", 
             "€4.95", 
             "Creamy tangy passion fruit mousse.", 
             "D; E", 
-            "images/mousse-poster.jpg", // Foto que fica de fundo antes do play (Salve uma foto do mousse com esse nome na pasta images)
+            "images/mousse-poster.jpg", 
             false, 
-            "images/mousse.mp4" // Caminho do vídeo
+            "images/mousse.mp4"
         ),
         
-        // PAVÊ TRADICIONAL ADICIONADO
         createCard("PAVÊ TRADICIONAL", "€4.95", "Traditional Brazilian pavê — layers of biscuit and creamy chocolate or passion fruit filling.", "G1; D; E", "images/pave.jpg", false),
         
         createCard("BOLO DE POTE", "€6.95", "Layers of cake and creamy filling (check availability).", "G1; D; E; N", dessertImg, false)
@@ -1134,7 +1133,7 @@
         createCard("SMOOTHIE", "€5.95", "Strawberry or Mix Berry.", "", drinkImg, false)
     ];
 
-    // FUNÇÃO RENDER MODIFICADA PARA SUPORTAR VÍDEO
+    // ======================== FUNÇÃO RENDER (LÓGICA DO VÍDEO E PLAY CUSTOMIZADO) ========================
     function render(containerId, items) {
         const container = document.getElementById(containerId);
         if (!container) return;
@@ -1146,7 +1145,6 @@
                 sideButtonHtml = `<button class="choose-sides-btn" onclick="goToSideMeals()">🍚 CHOOSE SIDES</button>`;
             }
             
-            // Nome do prato com BEST SELLER badge
             let nameHtml = item.name;
             if (item.isHot) {
                 nameHtml = `
@@ -1155,15 +1153,18 @@
                 `;
             }
             
-            // VERIFICA SE TEM VÍDEO OU IMAGEM
+            // Se tiver vídeo, mostra a foto com um botão de play no meio. O vídeo só abre no lightbox.
             let mediaHtml = '';
             if (item.video) {
                 mediaHtml = `
-                    <video class="dish-video" controls playsinline preload="metadata" poster="${item.img}" onclick="openVideoLightbox('${item.video}', '${item.name.replace(/'/g, "\\'")}')">
-                        <source src="${item.video}" type="video/mp4">
-                        Seu navegador não suporta vídeo.
-                    </video>
-                    <button class="zoom-btn" onclick="openVideoLightbox('${item.video}', '${item.name.replace(/'/g, "\\'")}')">🔍</button>
+                    <div style="position:relative; width:100%; height:100%;">
+                        <img class="dish-img" src="${item.img}" alt="${item.name}" style="cursor:pointer;" onclick="openVideoLightbox('${item.video}', '${item.name.replace(/'/g, "\\'")}')">
+                        <!-- Botão de Play -->
+                        <button onclick="openVideoLightbox('${item.video}', '${item.name.replace(/'/g, "\\'")}')" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:rgba(226,118,42,0.9); border:none; color:white; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.4); font-size:24px; padding-left:5px; z-index:10;">
+                            ▶
+                        </button>
+                        <button class="zoom-btn" onclick="openVideoLightbox('${item.video}', '${item.name.replace(/'/g, "\\'")}')">🔍</button>
+                    </div>
                 `;
             } else {
                 mediaHtml = `
