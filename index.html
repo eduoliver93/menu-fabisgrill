@@ -314,84 +314,67 @@
             background: rgba(224,124,31,0.8);
         }
 
-        /* ===== BOTÃO PLAY DESTACADO (vídeo) ===== */
+        /* ===== BOTÃO PLAY DESTACADO — no canto (vídeo) ===== */
         .play-btn-overlay {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 68px;
-            height: 68px;
-            border-radius: 50%;
+            bottom: 10px;
+            right: 10px;
+            height: 42px;
+            padding: 0 16px 0 12px;
+            border-radius: 30px;
             border: none;
             background: linear-gradient(135deg, var(--ember), var(--ember-deep));
             color: #fff;
-            font-size: 1.7rem;
+            font-weight: 700;
+            font-family: var(--font-body);
+            letter-spacing: 0.5px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 6px;
             cursor: pointer;
             z-index: 6;
-            box-shadow: 0 6px 22px rgba(226,118,42,0.65), 0 0 0 4px rgba(255,255,255,0.12);
+            box-shadow: 0 4px 16px rgba(226,118,42,0.7), 0 0 0 3px rgba(255,255,255,0.15);
             animation: playPulse 1.8s ease-in-out infinite;
             touch-action: manipulation;
-            padding-left: 4px; /* centraliza o ▶ visualmente */
+            text-transform: uppercase;
+            font-size: 0.72rem;
+        }
+
+        .play-btn-overlay .play-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.22);
+            font-size: 0.7rem;
+            padding-left: 2px;
+            flex-shrink: 0;
         }
 
         .play-btn-overlay::before {
             content: "";
             position: absolute;
-            inset: -8px;
-            border-radius: 50%;
+            inset: -5px;
+            border-radius: 30px;
             border: 2px solid rgba(226,118,42,0.55);
             animation: playRing 1.8s ease-out infinite;
             pointer-events: none;
         }
 
         .play-btn-overlay:active {
-            transform: translate(-50%, -50%) scale(0.92);
+            transform: scale(0.94);
         }
 
         @keyframes playPulse {
-            0%, 100% { box-shadow: 0 6px 22px rgba(226,118,42,0.65), 0 0 0 4px rgba(255,255,255,0.12); }
-            50%      { box-shadow: 0 6px 30px rgba(226,118,42,0.95), 0 0 0 8px rgba(255,255,255,0.08); }
+            0%, 100% { box-shadow: 0 4px 16px rgba(226,118,42,0.7), 0 0 0 3px rgba(255,255,255,0.15); }
+            50%      { box-shadow: 0 4px 24px rgba(226,118,42,1), 0 0 0 6px rgba(255,255,255,0.1); }
         }
 
         @keyframes playRing {
-            0%   { transform: scale(0.9); opacity: 0.9; }
-            100% { transform: scale(1.4); opacity: 0; }
-        }
-
-        /* Etiqueta "VIDEO" no canto da imagem */
-        .video-tag {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(4px);
-            color: var(--gold-bright);
-            font-family: var(--font-body);
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            border: 1px solid var(--ember);
-            z-index: 6;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            text-transform: uppercase;
-        }
-
-        /* leve escurecimento na imagem pra destacar o botão */
-        .video-cover::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.25);
-            pointer-events: none;
-            z-index: 4;
+            0%   { transform: scale(0.95); opacity: 0.9; }
+            100% { transform: scale(1.25); opacity: 0; }
         }
 
         .lightbox {
@@ -1242,11 +1225,10 @@
             let mediaHtml = '';
             if (item.video) {
                 mediaHtml = `
-                    <div class="video-cover">
-                        <img class="dish-img" src="${item.img}" alt="${item.name}">
-                        <span class="video-tag">▶ VIDEO</span>
-                        <button class="play-btn-overlay" aria-label="Play video" onclick="openVideoLightbox('${item.video}', '${item.name.replace(/'/g, "\\'")}')">▶</button>
-                    </div>
+                    <img class="dish-img" src="${item.img}" alt="${item.name}">
+                    <button class="play-btn-overlay" aria-label="Play video" onclick="openVideoLightbox('${item.video}', '${item.name.replace(/'/g, "\\'")}')">
+                        <span class="play-icon">▶</span> VIDEO
+                    </button>
                 `;
             } else {
                 mediaHtml = `
