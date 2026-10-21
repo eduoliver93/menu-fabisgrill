@@ -869,6 +869,7 @@
         feijoada: "images/main-feijoada.jpg",
         parmegiana: "images/main-parmegiana.jpg",
         bifeMilho: "images/main-bife-milho.jpg",
+        bifeMilhoVideo: "images/bife-milho.mp4",   // 👈 VÍDEO ADICIONADO
         tilapia: "images/main-tilapia.jpg",
         strogonoff: "images/main-strogonoff.jpg"
     };
@@ -992,7 +993,15 @@
         createCard("PICANHA SIMPLES", "€18.50", "1 prime picanha steak. Served with 3 sides of your choice.", "G1", mainImages.picanhaSimples, true),
         createCard("FEIJOADA TRADICIONAL", "€18.45", "Traditional black bean stew with meats. Served with rice, farofa, vinaigrette, cabbage, pork belly & orange.", "G1; G4", mainImages.feijoada, false),
         createCard("PARMEGIANA", "€17.95", "Breaded beef or chicken with tomato sauce & mozzarella. Served with rice and potato salad.", "G1; D; E", mainImages.parmegiana, false),
-        createCard("BIFE/FRANGO COM CREME DE MILHO", "€15.95", "Breaded steak or chicken with creamy cheesy sweetcorn sauce. Served with rice and fries.", "G1; D", mainImages.bifeMilho, false),
+        createCard(
+            "BIFE/FRANGO COM CREME DE MILHO",
+            "€15.95",
+            "Breaded steak or chicken with creamy cheesy sweetcorn sauce. Served with rice and fries.",
+            "G1; D",
+            mainImages.bifeMilho,
+            false,
+            mainImages.bifeMilhoVideo
+        ),
         createCard("TILAPIA", "€16.50", "2 breaded tilapia fillets with rice, beans, fries and salad.", "G1; F; SB", mainImages.tilapia, false),
         createCard("STROGONOFF (CARNE/FRANGO)", "€15.95", "Beef or chicken stroganoff in creamy sauce. Served with rice and shoestring potatoes or fries.", "G1; D; MS", mainImages.strogonoff, false)
     ];
